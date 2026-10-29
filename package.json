@@ -4,12 +4,13 @@
   "private": true,
   "description": "Root workspace runner for Multimodal Attendance & Engagement Agent",
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
-    "dev:all": "start \"Backend (FastAPI)\" cmd /k npm run backend && npm run frontend",
+    "dev": "powershell -Command \"Get-Process -Id (Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force\"; npm --prefix frontend run dev",
+    "dev:all": "start \"Backend (FastAPI)\" cmd /k npm run backend && npm run dev",
     "build": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run start",
-    "frontend": "npm --prefix frontend run dev",
-    "backend": "powershell -Command \".\\venv\\Scripts\\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload\"",
+    "frontend": "npm run dev",
+    "backend": "powershell -Command \"Get-Process -Id (Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force; .\\venv\\Scripts\\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload\"",
+    "clean:ports": "powershell -Command \"Get-Process -Id (Get-NetTCPConnection -LocalPort 3000,8000 -ErrorAction SilentlyContinue).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Host 'Ports 3000 and 8000 freed successfully!'\"",
     "test": "powershell -Command \".\\venv\\Scripts\\python.exe -m pytest backend/tests/test_api.py -v\"",
     "seed": "powershell -Command \".\\venv\\Scripts\\python.exe scripts/seed_demo.py\""
   }
