@@ -1,6 +1,6 @@
 @echo off
-echo Starting FastAPI Multimodal Attendance Backend on http://localhost:8000 ...
+echo Starting FastAPI Multimodal Attendance Backend on http://127.0.0.1:8000 ...
 cd /d "%~dp0\.."
-.\venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+.\venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
 pause
 
