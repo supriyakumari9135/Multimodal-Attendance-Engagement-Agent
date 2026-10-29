@@ -171,3 +171,4 @@ class PrivacySettings(Base):
     consent_enforced = Column(Boolean, default=True, nullable=False)
     anonymous_tracks_only = Column(Boolean, default=False, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+

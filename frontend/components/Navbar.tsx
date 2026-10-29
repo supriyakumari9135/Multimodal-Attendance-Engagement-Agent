@@ -120,3 +120,4 @@ export function Navbar({ selectedCourseId, onSelectCourse }: NavbarProps) {
     </header>
   );
 }
+

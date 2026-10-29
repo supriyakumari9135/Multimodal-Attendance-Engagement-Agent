@@ -113,3 +113,4 @@ def test_csv_and_pdf_report_generation():
     assert pdf_resp.status_code == 200
     assert "application/pdf" in pdf_resp.headers["content-type"]
     assert len(pdf_resp.content) > 500  # Non-empty PDF binary
+

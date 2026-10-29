@@ -1,0 +1,16 @@
+{
+  "name": "multimodal-attendance-agent-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root workspace runner for Multimodal Attendance & Engagement Agent",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "frontend": "npm --prefix frontend run dev",
+    "backend": "powershell -Command \".\\venv\\Scripts\\python.exe -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload\"",
+    "test": "powershell -Command \".\\venv\\Scripts\\python.exe -m pytest backend/tests/test_api.py -v\"",
+    "seed": "powershell -Command \".\\venv\\Scripts\\python.exe scripts/seed_demo.py\""
+  }
+}
+

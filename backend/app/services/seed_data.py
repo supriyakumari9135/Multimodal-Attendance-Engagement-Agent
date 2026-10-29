@@ -310,3 +310,4 @@ def seed_demo_data(db: Session, force_reset: bool = False):
 
     db.commit()
     return {"status": "success", "message": "Demo data initialized successfully with 14 students and 3 sessions."}
+

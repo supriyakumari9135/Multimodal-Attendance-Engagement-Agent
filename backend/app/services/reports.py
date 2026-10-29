@@ -208,3 +208,4 @@ def generate_session_pdf(
 
     doc.build(story)
     return buffer.getvalue()
+

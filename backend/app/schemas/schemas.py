@@ -228,3 +228,4 @@ class SessionAnalyticsTimeline(BaseModel):
     timeline_points: List[Dict[str, Any]]
     attendance_summary: Dict[str, int]
     insights: List[Dict[str, Any]]
+

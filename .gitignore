@@ -1,7 +1,26 @@
-﻿venv/
+﻿# Python
+venv/
+.venv/
 __pycache__/
-*.pyc
-.env
+*.py[cod]
 
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Node dependencies
 node_modules/
-frontend/node_modules/
+**/node_modules/
+
+# Next.js generated files
+.next/
+**/.next/
+
+# Build output
+dist/
+out/
+build/
+
+# Logs
+npm-debug.log*
