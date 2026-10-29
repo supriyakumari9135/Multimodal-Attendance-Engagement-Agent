@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Unified Next.js Full-Stack Multimodal Attendance & Engagement Agent",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",

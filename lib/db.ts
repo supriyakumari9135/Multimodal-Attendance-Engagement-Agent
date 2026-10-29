@@ -1,20 +1,50 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 import { DatabaseSync } from "node:sqlite";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+function getDatabasePath(): string {
+  const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  if (isServerless) {
+    const tmpDir = path.join(os.tmpdir(), "multimodal-agent");
+    try {
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      return path.join(tmpDir, "attendance.db");
+    } catch {
+      return path.join(os.tmpdir(), "attendance.db");
+    }
+  }
 
-const DB_PATH = path.join(DATA_DIR, "attendance.db");
+  const localDataDir = path.join(process.cwd(), "data");
+  try {
+    if (!fs.existsSync(localDataDir)) {
+      fs.mkdirSync(localDataDir, { recursive: true });
+    }
+    return path.join(localDataDir, "attendance.db");
+  } catch {
+    return path.join(os.tmpdir(), "attendance.db");
+  }
+}
 
 let dbInstance: DatabaseSync | null = null;
 
 export function getDb(): DatabaseSync {
   if (!dbInstance) {
-    dbInstance = new DatabaseSync(DB_PATH);
+    const dbPath = getDatabasePath();
+    dbInstance = new DatabaseSync(dbPath);
     initSchema(dbInstance);
+
+    // Auto-seed if running on a fresh instance
+    try {
+      const check = dbInstance.prepare("SELECT COUNT(*) as count FROM courses").get() as any;
+      if (!check || check.count === 0) {
+        seedDemoData(false);
+      }
+    } catch {
+      // Ignore if table not yet initialized
+    }
   }
   return dbInstance;
 }

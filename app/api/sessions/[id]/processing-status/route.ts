@@ -11,6 +11,13 @@ export async function GET(
     const runnerState = sessionRunnerManager.getSessionState(sessionId);
 
     if (runnerState) {
+      if (!runnerState.isPaused && !runnerState.isStopped) {
+        const calculatedElapsed = Math.floor((Date.now() - new Date(runnerState.startTime).getTime()) / 1000);
+        if (calculatedElapsed > runnerState.elapsedSeconds) {
+          runnerState.elapsedSeconds = calculatedElapsed;
+        }
+      }
+
       return NextResponse.json({
         session_id: sessionId,
         status: runnerState.status,
