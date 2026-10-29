@@ -32,6 +32,7 @@ export default function DashboardOverview() {
   const [actionLoading, setActionLoading] = useState<boolean>(false);
   const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -48,8 +49,10 @@ export default function DashboardOverview() {
         selectedSessionId || undefined
       );
       setStats(st);
+      setErrorMessage(null);
     } catch (err: any) {
       console.error(err);
+      setErrorMessage(err.message || "Unable to connect to the backend server.");
     } finally {
       setLoading(false);
     }
@@ -62,29 +65,31 @@ export default function DashboardOverview() {
   const handleSeedDemo = async () => {
     try {
       setActionLoading(true);
+      setErrorMessage(null);
       const res = await api.seedDemo();
       setStatusMessage(res.message);
       await fetchData();
     } catch (err: any) {
-      alert("Error seeding demo: " + err.message);
+      setErrorMessage(err.message || "Failed to seed demo data. Please verify backend is running.");
     } finally {
       setActionLoading(false);
-      setTimeout(() => setStatusMessage(null), 4000);
+      setTimeout(() => setStatusMessage(null), 5000);
     }
   };
 
   const handleResetDemo = async () => {
     try {
       setActionLoading(true);
+      setErrorMessage(null);
       setShowResetConfirm(false);
       const res = await api.resetDemo();
       setStatusMessage("Demo data has been cleanly reset.");
       await fetchData();
     } catch (err: any) {
-      alert("Error resetting demo: " + err.message);
+      setErrorMessage(err.message || "Failed to reset demo data.");
     } finally {
       setActionLoading(false);
-      setTimeout(() => setStatusMessage(null), 4000);
+      setTimeout(() => setStatusMessage(null), 5000);
     }
   };
 
@@ -150,6 +155,27 @@ export default function DashboardOverview() {
                 Confirm Reset
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Error banner */}
+      {errorMessage && (
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-900 flex items-start space-x-3 shadow-sm">
+          <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="font-bold text-sm block text-rose-950">Backend Connection Error</span>
+            <p className="leading-relaxed">{errorMessage}</p>
+            <p className="text-[11px] text-rose-700 pt-1">
+              Ensure the Python FastAPI backend is running by executing:{" "}
+              <code className="bg-rose-100 text-rose-900 px-1.5 py-0.5 rounded font-mono font-bold">
+                npm run backend
+              </code>{" "}
+              or launch both services simultaneously with{" "}
+              <code className="bg-rose-100 text-rose-900 px-1.5 py-0.5 rounded font-mono font-bold">
+                npm run dev:all
+              </code>.
+            </p>
           </div>
         </div>
       )}

@@ -83,16 +83,23 @@ export function Navbar({ selectedCourseId, onSelectCourse }: NavbarProps) {
         )}
 
         {/* Local Processing Badge */}
-        <div className="flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full text-xs font-medium">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Local Processing</span>
-        </div>
-
-        {/* Offline Status */}
-        <div className="flex items-center space-x-1.5 bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-1 rounded-full text-xs font-medium">
-          <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
-          <span>100% Offline Ready</span>
-        </div>
+        {isConnected ? (
+          <>
+            <div className="flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full text-xs font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Local Processing</span>
+            </div>
+            <div className="flex items-center space-x-1.5 bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-1 rounded-full text-xs font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
+              <span>100% Offline Ready</span>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center space-x-1.5 bg-rose-50 text-rose-800 border border-rose-200 px-2.5 py-1 rounded-full text-xs font-medium animate-pulse">
+            <AlertCircle className="w-3.5 h-3.5 text-rose-600" />
+            <span>Backend Offline &bull; Run 'npm run backend'</span>
+          </div>
+        )}
       </div>
 
       {/* Right User & Actions */}

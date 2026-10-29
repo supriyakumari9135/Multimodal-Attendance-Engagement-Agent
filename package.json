@@ -5,6 +5,7 @@
   "description": "Root workspace runner for Multimodal Attendance & Engagement Agent",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
+    "dev:all": "start \"Backend (FastAPI)\" cmd /k npm run backend && npm run frontend",
     "build": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run start",
     "frontend": "npm --prefix frontend run dev",
