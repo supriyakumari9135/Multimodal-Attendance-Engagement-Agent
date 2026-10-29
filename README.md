@@ -42,11 +42,33 @@ The agent records sustained participant attendance from live camera feeds, uploa
 
 ## Technology Stack
 
-- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS, Recharts, Lucide Icons, clsx / tailwind-merge.
-- **Backend:** Python 3.11+ / 3.12, FastAPI, Pydantic v2, SQLAlchemy 2, ReportLab, OpenCV Headless, NumPy, Pandas, Pytest.
-- **Database:** Local SQLite (`data/attendance.db`) with relational foreign keys and PostgreSQL migration compatibility.
+- **Unified Full-Stack Framework:** Next.js 14 (App Router) running both the modern reactive UI and high-performance serverless Route Handlers on a single port (`http://localhost:3000`).
+- **Language & Types:** 100% TypeScript with strict typing across UI and API endpoints.
+- **Styling & UI:** Tailwind CSS, Lucide Icons, Recharts for data visualization, React Hook Form, and Zod.
+- **Database & Persistence:** Embedded local SQLite database (`data/attendance.db`) using Node.js native `node:sqlite` (`DatabaseSync`), requiring zero C++ build tools, zero external daemons, and zero cloud API keys.
+- **Offline Reports Engine:** Pure offline PDF generation via `pdfkit` and CSV exports directly from server endpoints.
 
 ---
+
+## Quick Start (Single Command)
+
+### Prerequisites
+
+- Node.js 20+ (Node 22 or 24 recommended)
+- npm 9+
+
+### Running the Complete Application
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start the unified full-stack application
+npm run dev
+```
+
+Open your browser at **[http://localhost:3000](http://localhost:3000)**.
+Both the complete interactive dashboard and all backend REST APIs are active immediately on port 3000. No separate server, Python virtualenv, or second terminal is needed.
 
 ## Architecture Overview
 

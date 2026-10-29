@@ -1,18 +1,35 @@
 {
-  "name": "multimodal-attendance-agent-root",
+  "name": "multimodal-attendance-agent",
   "version": "1.0.0",
   "private": true,
-  "description": "Root workspace runner for Multimodal Attendance & Engagement Agent",
+  "description": "Unified Next.js Full-Stack Multimodal Attendance & Engagement Agent",
   "scripts": {
-    "dev": "powershell -Command \"Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -gt 0 } | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }\"; npm --prefix frontend run dev",
-    "dev:all": "start \"Backend (FastAPI)\" cmd /k npm run backend && npm run dev",
-    "build": "npm --prefix frontend run build",
-    "start": "npm --prefix frontend run start",
-    "frontend": "npm run dev",
-    "backend": "powershell -Command \"Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -gt 0 } | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; .\\venv\\Scripts\\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload\"",
-    "clean:ports": "powershell -Command \"Get-NetTCPConnection -LocalPort 3000,8000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -gt 0 } | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host 'Ports 3000 and 8000 freed successfully!'\"",
-    "test": "powershell -Command \".\\venv\\Scripts\\python.exe -m pytest backend/tests/test_api.py -v\"",
-    "seed": "powershell -Command \".\\venv\\Scripts\\python.exe scripts/seed_demo.py\""
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "iconv-lite": "^0.7.3",
+    "lucide-react": "^0.453.0",
+    "next": "^14.2.15",
+    "pdfkit": "^0.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
+    "recharts": "^2.13.0",
+    "tailwind-merge": "^2.5.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/pdfkit": "^0.13.4",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3"
   }
 }
-

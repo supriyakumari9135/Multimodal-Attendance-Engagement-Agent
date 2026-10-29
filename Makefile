@@ -1,30 +1,24 @@
-.PHONY: help install backend frontend test test-backend seed clean
+.PHONY: help install dev build start clean
 
 help:
-	@echo "Available commands:"
-	@echo "  make install        Install both backend and frontend dependencies"
-	@echo "  make backend        Run FastAPI backend server on port 8000"
-	@echo "  make frontend       Run Next.js frontend dev server on port 3000"
-	@echo "  make test           Run automated backend tests"
-	@echo "  make seed           Seed deterministic demo data"
+	@echo "Available commands for Unified Multimodal Attendance Agent:"
+	@echo "  make install        Install unified full-stack Next.js dependencies"
+	@echo "  make dev            Run unified full-stack dev server on http://localhost:3000"
+	@echo "  make build          Build optimized production application"
+	@echo "  make start          Start production server on http://localhost:3000"
+	@echo "  make clean          Clean build artifacts"
 
 install:
-	python -m venv venv
-	.\venv\Scripts\pip install -r backend/requirements.txt
-	cd frontend && npm install
+	npm install
 
-backend:
-	.\venv\Scripts\uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+dev:
+	npm run dev
 
-frontend:
-	cd frontend && npm run dev
+build:
+	npm run build
 
-test:
-	.\venv\Scripts\pytest backend/tests/test_api.py -v
-
-seed:
-	.\venv\Scripts\python scripts/seed_demo.py
+start:
+	npm run start
 
 clean:
-	rm -rf frontend/.next frontend/node_modules backend/__pycache__ .pytest_cache
-
+	rm -rf .next
